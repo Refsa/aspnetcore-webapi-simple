@@ -1,0 +1,28 @@
+{
+  "GlobalConfiguration": {
+    "BaseUrl": "http://localhost:5109"
+  },
+  "Routes": [
+    {
+      "UpstreamPathTemplate": "/transportinfo/v1/{everything}",
+      "UpstreamHttpMethod": [
+        "GET"
+      ],
+      "DownstreamPathTemplate": "/api/v1/{everything}",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 5160
+        }
+      ],
+      "RateLimitOptions": {
+        "ClientWhiteList": [],
+        "EnableRateLimiting": true,
+        "Period": "1s",
+        "PeriodTimespan": 5,
+        "Limit": 4
+      }
+    }
+  ]
+}

@@ -1,0 +1,54 @@
+version: '3.4'
+
+services:
+  prometheus:
+    image: prom/prometheus:latest
+    ports:
+      - 9000:9090
+    volumes:
+      - ./prometheus:/etc/prometheus
+      - prometheus-data:/prometheus
+    command: --web.enable-lifecycle  --config.file=/etc/prometheus/prometheus.yml
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
+
+  grafana:
+    image: grafana/grafana
+    ports:
+      - 3000:3000
+    volumes:
+      - grafana-storage:/var/lib/grafana
+      - grafana-home:/usr/share/grafana
+    networks:
+      - loki
+
+  promtail:
+    image: grafana/promtail
+    volumes:
+      - promtail-data:/var/log
+    networks:
+      - loki
+
+  loki:
+    image: grafana/loki
+    ports:
+      - 3100:3100
+    volumes:
+      - loki-data:/loki
+    networks:
+      - loki
+
+  # gateway:
+    # image: transportinfo-gateway
+    # ports:
+      # - 5109:80
+
+networks:
+  loki:
+
+volumes:
+  prometheus-data:
+  grafana-storage:
+  grafana-home:
+  loki-data:
+  promtail-data:

@@ -1,0 +1,5 @@
+{
+    "ConnectionStrings": {
+        "ParkingRegistry": "Data Source=ParkingRegistry.db"
+    }
+}
